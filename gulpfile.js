@@ -5,6 +5,7 @@ const cssValidator = require(`gulp-stylelint`);
 const jsValidator = require(`gulp-eslint`);
 const babel = require(`gulp-babel`);
 const jsMinifier = require(`gulp-minify`);
+const cssCompressor = require(`gulp-clean-css`);
 const browserSync = require(`browser-sync`);
 const reload = browserSync.reload;
 
@@ -46,6 +47,12 @@ let transpileJSForProd = () => {
         .pipe(dest(`prod/js`));
 };
 
+let compressCSS = () => {
+    return src([`css/*.css`, `css/**/*.css`])
+        .pipe(cssCompressor({compatibility: 'ie8'}))
+        .pipe(dest(`prod/css`));
+}
+
 let dev = () => {
     browserSync({
         notify: true,
@@ -79,8 +86,10 @@ exports.validateCSS = validateCSS;
 exports.validateJS = validateJS;
 exports.transpileJS = transpileJS;
 exports.transpileJSForProd = transpileJSForProd;
+exports.compressCSS = compressCSS;
 exports.dev = series(validateCSS, validateJS, transpileJS, validateHTML, dev);
 exports.build = series(
     compressHTML,
     transpileJSForProd,
+    compressCSS
 );
