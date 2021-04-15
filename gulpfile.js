@@ -10,16 +10,14 @@ const browserSync = require(`browser-sync`);
 const reload = browserSync.reload;
 
 let validateHTML = () => {
-    return src([
-        `html/*.html`,
-        `html/**/*.html`])
+    return src([`html/*.html`,`html/**/*.html`])
         .pipe(htmlValidator());
 };
 
 let compressHTML = () => {
     return src([`html/*.html`,`html/**/*.html`])
         .pipe(htmlCompressor({collapseWhitespace: true}))
-        .pipe(dest(`prod/html`));
+        .pipe(dest(`prod`));
 };
 
 let validateCSS = () => {
@@ -66,18 +64,16 @@ let dev = () => {
     });
 
     watch(`js/*.js`,
-        series(validateJS)
+        series(validateJS,transpileJS)
     ).on(`change`, reload);
 
     watch(`css/**/*.css`,
         series(validateCSS)
     ).on(`change`, reload);
 
-    watch(`html/**/*.html`,
+    watch(`**/*.html`,
         series(validateHTML)
     ).on(`change`, reload);
-
-    // watch(`dev/img/**/*`).on(`change`, reload);
 };
 
 exports.validateHTML = validateHTML;
