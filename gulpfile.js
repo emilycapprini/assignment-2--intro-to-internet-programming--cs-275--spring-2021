@@ -4,6 +4,7 @@ const htmlCompressor = require(`gulp-htmlmin`);
 const cssValidator = require(`gulp-stylelint`);
 const jsValidator = require(`gulp-eslint`);
 const babel = require(`gulp-babel`);
+const jsMinifier = require(`gulp-minify`);
 const browserSync = require(`browser-sync`);
 const reload = browserSync.reload;
 
@@ -17,7 +18,7 @@ let validateHTML = () => {
 let compressHTML = () => {
     return src([`html/*.html`,`html/**/*.html`])
         .pipe(htmlCompressor({collapseWhitespace: true}))
-        .pipe(dest(`prod`));
+        .pipe(dest(`prod/html`));
 };
 
 let validateCSS = () => {
@@ -35,9 +36,21 @@ let validateJS= () => {
 let transpileJS = () => {
     return src(`js/*.js`)
         .pipe(babel())
+        .pipe(dest(`dev/js`));
+};
+
+let transpileJSForProd = () => {
+    return src(`js/*.js`)
+        .pipe(babel())
+        .pipe(jsMinifier())
         .pipe(dest(`prod/js`));
 };
 
+// let minifyJS = () => {
+//     return src(`js/*.js`)
+//         .pipe(jsMinifier())
+//         .pipe(dest('prod/js'))
+// }
 
 let dev = () => {
     browserSync({
@@ -71,10 +84,11 @@ exports.compressHTML = compressHTML;
 exports.validateCSS = validateCSS;
 exports.validateJS = validateJS;
 exports.transpileJS = transpileJS;
-exports.dev = series(validateCSS, validateJS, validateHTML, dev);
+exports.transpileJSForProd = transpileJSForProd;
+// exports.minifyJS = minifyJS;
+exports.dev = series(validateCSS, validateJS, transpileJS, validateHTML, dev);
 exports.build = series(
     compressHTML,
-    // compileCSSForProd,
-    transpileJS,
-    // compressImages,
+    transpileJSForProd,
+    // minifyJS
 );
