@@ -3,6 +3,7 @@ const htmlValidator = require(`gulp-html`);
 const htmlCompressor = require(`gulp-htmlmin`);
 const cssValidator = require(`gulp-stylelint`);
 const jsValidator = require(`gulp-eslint`);
+const babel = require(`gulp-babel`);
 
 let validateHTML = () => {
     return src([
@@ -29,7 +30,14 @@ let validateJS= () => {
         .pipe(jsValidator.failAfterError());
 };
 
+let transpileJS = () => {
+    return src(`js/*.js`)
+        .pipe(babel())
+        .pipe(dest(`prod/js`));
+};
+
 exports.validateHTML = validateHTML;
 exports.compressHTML = compressHTML;
 exports.validateCSS = validateCSS;
 exports.validateJS = validateJS;
+exports.transpileJS = transpileJS;
