@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/emilycapprini/assignment-2--intro-to-internet-programming--cs-275--spring-2021#readme",
   "devDependencies": {
+    "gulp-eslint": "^6.0.0",
     "gulp-html": "^3.3.0",
     "gulp-htmlmin": "^5.0.1",
     "gulp-stylelint": "^13.0.0",
