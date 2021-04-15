@@ -46,12 +46,6 @@ let transpileJSForProd = () => {
         .pipe(dest(`prod/js`));
 };
 
-// let minifyJS = () => {
-//     return src(`js/*.js`)
-//         .pipe(jsMinifier())
-//         .pipe(dest('prod/js'))
-// }
-
 let dev = () => {
     browserSync({
         notify: true,
@@ -85,10 +79,8 @@ exports.validateCSS = validateCSS;
 exports.validateJS = validateJS;
 exports.transpileJS = transpileJS;
 exports.transpileJSForProd = transpileJSForProd;
-// exports.minifyJS = minifyJS;
 exports.dev = series(validateCSS, validateJS, transpileJS, validateHTML, dev);
 exports.build = series(
     compressHTML,
     transpileJSForProd,
-    // minifyJS
 );
