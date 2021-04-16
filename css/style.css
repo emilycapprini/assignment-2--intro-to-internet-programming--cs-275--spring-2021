@@ -5,3 +5,17 @@ body {
 .page-heading {
   text-align: center;
 }
+
+.recipe {
+  text-align: center;
+  margin: 10%;
+  margin-top: auto;
+}
+
+.selections {
+  margin-left: 50px;
+}
+
+h2 {
+  margin: 10px;
+}
