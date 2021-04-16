@@ -15,7 +15,6 @@ window.onload = () => {
     let input = document.querySelector(`input`);
 
     input.addEventListener(`input`, () => {
-        let output = input.value;
         if(!document.getElementById(`white`).hidden){
             document.getElementById(`cups-rice-w`).textContent = input.value;
             document.getElementById(`cups-water-w`).textContent = input.value*2;
