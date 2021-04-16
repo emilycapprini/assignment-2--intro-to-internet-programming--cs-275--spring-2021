@@ -25,7 +25,5 @@ window.onload = () => {
             document.getElementById(`cups-water-c`).textContent = input.value*1.6;
             document.getElementById(`tbsp-oil-c`).textContent = input.value/0.8;
         }
-
     }, false);
-
 };
